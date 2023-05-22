@@ -25,4 +25,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('student')->group(function(){
     Route::get('/create', [StudentController::class, 'create'])->name('student.create');
+    Route::post('/create', [StudentController::class, 'store'])->name('student.create');
 });

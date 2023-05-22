@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -73,8 +74,13 @@
         </nav>
 
         <main class="py-4">
+            <div class="col-3" style="position:fixed;bottom:10px; right:20px; z-index:999">
+                <x-alertmsg />
+            </div>
             @yield('content')
         </main>
     </div>
+{{-- jquery cdn --}}
+
 </body>
 </html>
