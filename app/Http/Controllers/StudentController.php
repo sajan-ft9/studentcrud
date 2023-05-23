@@ -12,7 +12,10 @@ class StudentController extends Controller
         return view('student.create');
     }
 
+
     public function store(Request $request){
+        dd($request);
+        
         $student_fields = $request->validate([
             'name' => ['required'],
             'address' => ['required'],
@@ -27,10 +30,9 @@ class StudentController extends Controller
             'level' => ['required'],
             'college' => ['required'],
             'university' => ['required'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date']
+            'start_date' => ['required'],
+            'end_date' => ['required']
         ]);
-        // dd($request);
         $imageName = time() . '.' . $request->image_path->extension();
         $request->image_path->storeAs('students', $imageName, 'public');
         $student_fields['image_path'] = '/storage/students/' . $imageName;
@@ -38,6 +40,7 @@ class StudentController extends Controller
         $student = Student::create($student_fields);
         
 
+        
         
         
         $education_fields['student_id'] = $student->id;
