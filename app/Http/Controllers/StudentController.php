@@ -14,7 +14,6 @@ class StudentController extends Controller
 
 
     public function store(Request $request){
-        dd($request);
         
         $student_fields = $request->validate([
             'name' => ['required'],
@@ -33,21 +32,26 @@ class StudentController extends Controller
             'start_date' => ['required'],
             'end_date' => ['required']
         ]);
+    
+
         $imageName = time() . '.' . $request->image_path->extension();
         $request->image_path->storeAs('students', $imageName, 'public');
         $student_fields['image_path'] = '/storage/students/' . $imageName;
 
         $student = Student::create($student_fields);
-        
+    
+        foreach($education_fields['level'] as $key=>$item){
+            $education = new Education();
+            $education->student_id = $student->id;
+            $education->level = $request->level[$key];      
+            $education->college = $request->college[$key];      
+            $education->university = $request->university[$key];      
+            $education->start_date = $request->start_date[$key];      
+            $education->end_date = $request->end_date[$key];      
+            $education->save();
+        }        
 
-        
-        
-        
-        $education_fields['student_id'] = $student->id;
-
-        Education::create($education_fields);
-        
-        return redirect('/home')->with('success', "Student info added successfully");
+        return redirect(route('home'))->with('success', "Student info added successfully");
         
     } 
 }

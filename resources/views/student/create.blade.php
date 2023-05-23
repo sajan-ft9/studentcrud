@@ -111,8 +111,6 @@
                                         </th>
                                         <th>
                                             <label class="form-label w-100">Delete</label>
-
-
                                         </th>
                                     </tr>
                                     <tr>
@@ -137,7 +135,7 @@
 
                                         </td>
                                         <td>
-                                            <button type="button" class="removeField btn btn-danger">
+                                            <button type="button" class=" delete-row btn btn-danger">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </td>
@@ -185,6 +183,7 @@
         var count = 1;
         $("#addField").click(function(){
                 count++;
+                console.log("Increased to: ", count)
                 if(count <= 5){
                     $("table tr:last").after(`
                     <tr>
@@ -209,8 +208,8 @@
 
                                 </td>
                                 <td>
-                                    <button type="button" class="removeField btn btn-danger">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <button type="button" class="delete-row btn btn-danger">
+                                        <i class="fa fa-trash" aria-hidden="true" ></i>
                                     </button>
                                 </td>
                             </tr>
@@ -220,6 +219,17 @@
                     $("#max-error").html("Max limit is 5");
                 }
                 
+        })
+
+        $("table").on("click", ".delete-row", function(e){
+            e.preventDefault();
+            if(count > 1){
+                $(this).parents("tr").remove();
+                count--;
+                console.log("count after deletion: " , count)
+            }else{
+                console.log("Only one remaining")
+            }   
         })
     })
 
