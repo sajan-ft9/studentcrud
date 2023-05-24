@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('image_path');
             $table->string('gender');
-            $table->date('DOB');
+            $table->date('dob');
             $table->timestamps();
         });
     }

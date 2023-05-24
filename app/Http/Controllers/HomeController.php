@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return view('home', compact('students'));
+        $total_students = Student::count();
+        return view('home', compact('total_students'));
     }
 }

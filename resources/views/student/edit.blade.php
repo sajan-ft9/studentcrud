@@ -21,9 +21,9 @@
 						maxlength:10,
 						digits:true
 					},
-					image_path:{
-						required:true,            
-					},
+					// image_path:{
+					// 	required:true,            
+					// },
 					dob:{
 						required:true,
 					},
@@ -58,9 +58,9 @@
 						maxlength: 	"Please enter 10 digit mobile number",
 						digits: 	"Only numbers are allowed in this field"
 					},
-					image_path:{
-						required: "Please upload image.",
-					},
+					// image_path:{
+					// 	required: "Please upload image.",
+					// },
 					dob:{
 						required: "DOB is required",
 					},
@@ -95,32 +95,38 @@
 			</div>
 			@endif
 			<div>
-				<form id="myForm" action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
+				<form id="myForm" action="/student/edit/{{ $student->id }}" method="POST" enctype="multipart/form-data">
 					@csrf
-					{{-- @method("PATCH") --}}
+					@method("PATCH")
 					<div class="tab">
 						<div class="card">
 							<div class="card-header text-center">
-								<h2>Create Student Profile</h2>
+								<h2>Update Student Profile</h2>
 							</div>
 							<!-- One "tab" for each step in the form: -->
 							<div class="card-body">
 								<div class="mb-3">
 									<label class="form-label">Name <span class="text-danger">*</span></label>
-									<input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+									<input type="text" name="name" id="name" class="form-control" value="{{ $student->name }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Address <span class="text-danger">*</span></label>
-									<input type="text" name="address" id="address" class="form-control" value="{{ old('address') }}"
+									<input type="text" name="address" id="address" class="form-control" value="{{ $student->address }}"
 										required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Phone <span class="text-danger">*</span></label>
-									<input type="tel" name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>
+									<input type="tel" name="phone" id="phone" class="form-control" value="{{ $student->phone }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Email address <span class="text-danger">*</span></label>
-									<input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+									<input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}"
+										required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Old Photo</label>
+									<img src="{{ asset($student->image_path) }}" style="width:200px; height:100px; object-fit:contain" alt="">
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Photo</label>
@@ -129,19 +135,22 @@
 								<div class="mb-3">
 									<label class="form-label">Gender: <span class="text-danger">*</span></label>
 									<span class="mx-4">
-										Male<input class="mx-2" type="radio" name="gender" value="M" required>
+										Male<input class="mx-2" type="radio" name="gender" value="M" {{ $student->gender === "M" ? "checked"
+										: "" }}>
 
 									</span>
 									<span class="mx-4">
-										Female<input class="mx-2" type="radio" name="gender" value="F" required>
+										Female<input class="mx-2" type="radio" name="gender" value="F" {{ $student->gender === "F" ?
+										"checked" : "" }}>
 									</span>
 									<span class="mx-4">
-										Others<input class="mx-2" type="radio" name="gender" value="O" required>
+										Others<input class="mx-2" type="radio" name="gender" value="O" {{ $student->gender === "O" ?
+										"checked" : "" }}>
 									</span>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">DOB <span class="text-danger">*</span></label>
-									<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}" required>
+									<input type="date" name="dob" class="form-control" id="dob" value="{{ $student->dob }}" required>
 								</div>
 							</div>
 						</div>
@@ -150,7 +159,7 @@
 					<div class="tab">
 						<div class="card col-12">
 							<div class="card-header text-center">
-								<h2>Student Education Profile</h2>
+								<h2>Update Education Profile</h2>
 							</div>
 							<!-- One "tab" for each step in the form: -->
 							<div class="card-body">
@@ -175,25 +184,31 @@
 											<label class="form-label w-100">Delete</label>
 										</th>
 									</tr>
+									@foreach ($student->education as $key=>$item)
 									<tr>
 										<td>
-											<input type="text" id="level" name="level[0]" class="form-control" required>
+											<input type="text" id="level" name="level[{{ $key }}]" class="form-control" value="{{ $item->level }}"
+												required>
 
 										</td>
 										<td>
-											<input type="text" id="college" name="college[0]" class="form-control" required>
+											<input type="text" id="college" name="college[{{ $key }}]" class="form-control"
+												value="{{ $item->college }}" required>
 
 										</td>
 										<td>
-											<input type="text" id="university" name="university[0]" class="form-control" required>
+											<input type="text" id="university" name="university[{{ $key }}]" class="form-control"
+												value="{{ $item->university }}" required>
 
 										</td>
 										<td>
-											<input type="date" id="start_date" name="start_date[0]" class="form-control" required>
+											<input type="date" id="start_date" name="start_date[{{ $key }}]" class="form-control"
+												value="{{ $item->start_date }}" required>
 
 										</td>
 										<td>
-											<input type="date" id="end_date" name="end_date[0]" class="form-control" required>
+											<input type="date" id="end_date" name="end_date[{{ $key }}]" class="form-control"
+												value="{{ $item->end_date }}" required>
 
 										</td>
 										<td>
@@ -202,6 +217,7 @@
 											</button>
 										</td>
 									</tr>
+									@endforeach
 								</table>
 								<button type="button" class="btn btn-warning" id="addField"><i class="bi bi-plus text-white fs-4"></i></button>
 
@@ -215,7 +231,7 @@
 						<div style="float:right; margin-top: 5px;">
 							<button type="button" class="previous">Previous</button>
 							<button type="button" class="next">Next</button>
-							<button type="button" class="submit">Submit</button>
+							<button type="button" class="submit">Update</button>
 						</div>
 					</div>
 					<!-- Circles which indicates the steps of the form: -->
@@ -229,14 +245,18 @@
 	</div>
 </div>
 </div>
+
+
 <script>
 	// add
+
 	   $(document).ready(function(){
-        var count = 0;
+        var count = {{ count($student->education) }};
+				console.log(count);
         $("#addField").click(function(){
-               
-                if(count < 4){
-                    count++;
+           
+                if(count < 5){
+									count++;
                 console.log("Increased to: ", count)
                     $("table tr:last").after(`
                     <tr>
@@ -276,7 +296,7 @@
 
         $("table").on("click", ".delete-row", function(e){
             e.preventDefault();
-            if(count >= 1){
+            if(count > 1){
                 $(this).parents("tr").remove();
                 count--;
                 console.log("count after deletion: " , count)
