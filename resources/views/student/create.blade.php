@@ -95,7 +95,7 @@
 			</div>
 			@endif
 			<div>
-				<form id="myForm" action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
+				<form id="myForm" action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					{{-- @method("PATCH") --}}
 					<div class="tab">

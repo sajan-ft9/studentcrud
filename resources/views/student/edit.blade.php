@@ -95,7 +95,7 @@
 			</div>
 			@endif
 			<div>
-				<form id="myForm" action="/student/edit/{{ $student->id }}" method="POST" enctype="multipart/form-data">
+				<form id="myForm" action="/student/update/{{ $student->id }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method("PATCH")
 					<div class="tab">
