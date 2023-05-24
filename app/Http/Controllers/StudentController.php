@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -26,7 +27,6 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        // dd($request);
         $student_fields = $request->validate([
             'name' => ['required'],
             'address' => ['required'],
@@ -50,11 +50,13 @@ class StudentController extends Controller
             $request->image_path->storeAs('students', $imageName, 'public');
             $student_fields['image_path'] = '/storage/students/' . $imageName;
 
-            if (file_exists($imageName)) {
+            $trimmedPath = trim(str_replace("/storage/", "", $student->image_path));
 
-                @unlink($imageName);
+            if (Storage::disk('public')->exists($trimmedPath)) {
+    
+                Storage::disk('public')->delete($trimmedPath);
          
-            }
+            }    
         }
 
         $student->update($student_fields);
@@ -130,12 +132,15 @@ class StudentController extends Controller
 
     public function destroy(Student $student)
     {
-        $student->delete();
-        if (file_exists($student->image_path)) {
+        $trimmedPath = trim(str_replace("/storage/", "", $student->image_path));
 
-            @unlink($student->image_path);
+        if (Storage::disk('public')->exists($trimmedPath)) {
+
+            Storage::disk('public')->delete($trimmedPath);
      
         }
+        $student->delete();
+
         return redirect(route('student.list'))->with('success', "Student data deleted successfully");
     }
 }
