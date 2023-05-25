@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,17 @@ Route::get('/',[App\Http\Controllers\HomeController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->prefix('admin')->group(function(){
+
+    //admin profile
+
+    Route::get("/profile", [HomeController::class, 'profile'])->name('admin.profile');
+    Route::patch("/update", [HomeController::class, 'update'])->name('admin.update');
+    Route::patch("/update_password", [HomeController::class, 'update_password'])->name('admin.update_password');
+
+
+});
 
 Route::middleware('auth')->prefix('student')->group(function(){
 
