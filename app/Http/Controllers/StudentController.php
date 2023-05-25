@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentRequest;
 use App\Models\Education;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -25,25 +26,10 @@ class StudentController extends Controller
         return view("student.edit", compact('student'));
     }
 
-    public function update(Request $request, Student $student)
+    public function update(StudentRequest $request, Student $student)
     {
-        $student_fields = $request->validate([
-            'name' => ['required'],
-            'address' => ['required'],
-            'phone' => ['required', 'numeric'],
-            'email' => ['required', 'email'],
-            'gender' => ['required'],
-            'dob' => ['required', 'date'],
-        ]);
-
-        $education_fields = $request->validate([
-            'level' => ['required'],
-            'college' => ['required'],
-            'university' => ['required'],
-            'start_date' => ['required'],
-            'end_date' => ['required']
-        ]);
-
+        $student_fields = $request->only(['name','address','phone','email','image_path','gender','dob']);
+        
         if ($request->image_path) {
 
             $imageName = time() . '.' . $request->image_path->extension();
@@ -68,7 +54,7 @@ class StudentController extends Controller
             Education::where('student_id', $student->id)->delete();
         }
 
-        foreach ($education_fields['level'] as $key => $item) {
+        foreach ($request->level as $key => $item) {
             $education = new Education();
             $education->student_id = $student->id;
             $education->level = $request->level[$key];
@@ -88,27 +74,9 @@ class StudentController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-
-        $student_fields = $request->validate([
-            'name' => ['required'],
-            'address' => ['required'],
-            'phone' => ['required', 'numeric'],
-            'email' => ['required', 'email'],
-            'image_path' => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
-            'gender' => ['required'],
-            'dob' => ['required', 'date'],
-        ]);
-
-        $education_fields = $request->validate([
-            'level' => ['required'],
-            'college' => ['required'],
-            'university' => ['required'],
-            'start_date' => ['required'],
-            'end_date' => ['required']
-        ]);
-
+        $student_fields = $request->only(['name','address','phone','email','image_path','gender','dob']);
 
         $imageName = time() . '.' . $request->image_path->extension();
         $request->image_path->storeAs('students', $imageName, 'public');
@@ -116,7 +84,7 @@ class StudentController extends Controller
 
         $student = Student::create($student_fields);
 
-        foreach ($education_fields['level'] as $key => $item) {
+        foreach ($request->level as $key => $item) {
             $education = new Education();
             $education->student_id = $student->id;
             $education->level = $request->level[$key];
