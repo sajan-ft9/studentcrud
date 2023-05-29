@@ -77,11 +77,12 @@ class StudentController extends Controller
     {
         $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob']);
 
-
-        $imageName = time() . '.' . $request->image_path->extension();
-        $request->image_path->storeAs('students', $imageName, 'public');
-        $student_fields['image_path'] = '/storage/students/' . $imageName;
-
+        if(isset($request->image_path)){
+            $imageName = time() . '.' . $request->image_path->extension();
+            $request->image_path->storeAs('students', $imageName, 'public');
+            $student_fields['image_path'] = '/storage/students/' . $imageName;    
+        };
+        
         $student = Student::create($student_fields);
 
         foreach ($request->level as $key => $item) {
