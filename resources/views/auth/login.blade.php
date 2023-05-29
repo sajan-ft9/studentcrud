@@ -8,10 +8,10 @@
                 @csrf
                 <div class="card m-3">
                     <div class="row no-gutters">
-                        <div class="col-md-6" style="height:80vh">
-                            <img src="{{ asset('images/login.jpg') }}" height="100%" class="card-img" alt="...">
+                        <div class="col-6" style="height:80vh">
+                            <img src="{{ asset('images/login.jpg') }}" height="100%" style="object-fit: cover" class="card-img" alt="...">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card-body">
                                 <div class="text-center">
                                     <h2 class="card-title mb-5">Login to your account</h2>
