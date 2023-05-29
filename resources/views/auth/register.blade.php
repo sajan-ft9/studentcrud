@@ -8,7 +8,7 @@
                 @csrf
                 <div class="card m-3">
                     <div class="row no-gutters">
-                        <div class="col-md-6" style="height:70vh">
+                        <div class="col-md-6" style="height:80vh">
                             <img src="{{ asset('images/register.jpg') }}" style="object-fit: cover" height="100%"
                                 class="card-img" alt="...">
                         </div>

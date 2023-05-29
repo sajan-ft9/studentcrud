@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="card-body">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="card m-3">
                     <div class="row no-gutters">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="height:80vh">
                             <img src="{{ asset('images/login.jpg') }}" height="100%" class="card-img" alt="...">
                         </div>
                         <div class="col-md-6">
