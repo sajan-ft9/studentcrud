@@ -46,7 +46,7 @@ class HomeController extends Controller
         return redirect()->back()->with("success", "Name updated successfully");
     }
 
-    public function update_password(Request $request)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'old_password'=>["required"],

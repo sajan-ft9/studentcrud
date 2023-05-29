@@ -127,10 +127,14 @@
 								<div class="mb-3">
 									<label class="form-label">Old Photo</label>
 									<img src="{{ asset($student->image_path) }}" style="width:200px; height:100px; object-fit:contain" alt="">
+									<label class="form-label">New Photo</label>
+									
+									<img class="mt-2" id="output" height="100" width="200" alt="no new image" />
+
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Photo</label>
-									<input type="file" name="image_path" id="image" class="form-control" accept="image/*">
+									<input type="file" name="image_path" id="image" class="form-control" accept="image/*" onchange="loadFile(event)" />
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Gender: <span class="text-danger">*</span></label>
@@ -306,4 +310,13 @@
         })
     })
 </script>
+<script>
+	var loadFile = function(event) {
+	  var output = document.getElementById('output');
+	  output.src = URL.createObjectURL(event.target.files[0]);
+	  output.onload = function() {
+		URL.revokeObjectURL(output.src) // free memory
+	  }
+	};
+  </script>
 @endsection

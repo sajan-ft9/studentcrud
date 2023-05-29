@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use GuzzleHttp\Psr7\Request;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StudentRequest extends FormRequest
@@ -26,11 +26,11 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         $rules =  [
-            'name' => ['required'],
-            'address' => ['required'],
+            'name' => ['required','string'],
+            'address' => ['required','string'],
             'phone' => ['required', 'numeric'],
-            'email' => ['required', 'email'],
-            'image_path' => ['required','image', 'mimes:png,jpg,jpeg', 'max:4096'],
+            'email' => ['required', 'email', 'unique:students,email'],
+            'image_path' => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
             'gender' => ['required'],
             'dob' => ['required', 'date'],
             'level' => ['required'],
@@ -41,10 +41,10 @@ class StudentRequest extends FormRequest
         ];
         if(in_array($this->method(), ["PUT", "PATCH"])){
             $rules =  [
-                'name' => ['required'],
-                'address' => ['required'],
+                'name' => ['required','string'],
+                'address' => ['required','string'],
                 'phone' => ['required', 'numeric'],
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', Rule::unique('students')->ignore($this->route('student')) ],
                 'image_path' => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
                 'gender' => ['required'],
                 'dob' => ['required', 'date'],

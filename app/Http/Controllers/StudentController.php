@@ -16,9 +16,9 @@ class StudentController extends Controller
     }
     public function list()
     {
-        $students = Student::all();
+        $students = Student::get();
 
-        return view('student.list',compact('students'));
+        return view('student.list', compact('students'));
     }
 
     public function edit(Student $student)
@@ -28,8 +28,8 @@ class StudentController extends Controller
 
     public function update(StudentRequest $request, Student $student)
     {
-        $student_fields = $request->only(['name','address','phone','email','image_path','gender','dob']);
-        
+        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob']);
+
         if ($request->image_path) {
 
             $imageName = time() . '.' . $request->image_path->extension();
@@ -39,10 +39,9 @@ class StudentController extends Controller
             $trimmedPath = trim(str_replace("/storage/", "", $student->image_path));
 
             if (Storage::disk('public')->exists($trimmedPath)) {
-    
+
                 Storage::disk('public')->delete($trimmedPath);
-         
-            }    
+            }
         }
 
         $student->update($student_fields);
@@ -76,7 +75,8 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request)
     {
-        $student_fields = $request->only(['name','address','phone','email','image_path','gender','dob']);
+        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob']);
+
 
         $imageName = time() . '.' . $request->image_path->extension();
         $request->image_path->storeAs('students', $imageName, 'public');
@@ -105,7 +105,6 @@ class StudentController extends Controller
         if (Storage::disk('public')->exists($trimmedPath)) {
 
             Storage::disk('public')->delete($trimmedPath);
-     
         }
         $student->delete();
 

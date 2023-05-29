@@ -21,9 +21,9 @@
 						maxlength:10,
 						digits:true
 					},
-					image_path:{
-						required:true,            
-					},
+					// image_path:{
+					// 	required:true,            
+					// },
 					dob:{
 						required:true,
 					},
@@ -58,9 +58,9 @@
 						maxlength: 	"Please enter 10 digit mobile number",
 						digits: 	"Only numbers are allowed in this field"
 					},
-					image_path:{
-						required: "Please upload image.",
-					},
+					// image_path:{
+					// 	required: "Please upload image.",
+					// },
 					dob:{
 						required: "DOB is required",
 					},
@@ -107,24 +107,29 @@
 							<div class="card-body">
 								<div class="mb-3">
 									<label class="form-label">Name <span class="text-danger">*</span></label>
-									<input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+									<input type="text" name="name" id="name" class="form-control"
+										value="{{ old('name') }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Address <span class="text-danger">*</span></label>
-									<input type="text" name="address" id="address" class="form-control" value="{{ old('address') }}"
-										required>
+									<input type="text" name="address" id="address" class="form-control"
+										value="{{ old('address') }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Phone <span class="text-danger">*</span></label>
-									<input type="tel" name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>
+									<input type="tel" name="phone" id="phone" class="form-control"
+										value="{{ old('phone') }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Email address <span class="text-danger">*</span></label>
-									<input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+									<input type="email" id="email" name="email" class="form-control"
+										value="{{ old('email') }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Photo</label>
-									<input type="file" name="image_path" id="image" class="form-control" accept="image/*">
+									<input type="file" name="image_path" id="image" class="form-control"
+										accept="image/*" onchange="loadFile(event)" id="imgInp" />
+										<img class="mt-2" id="output" height="100" width="200" alt="image">
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Gender: <span class="text-danger">*</span></label>
@@ -141,7 +146,8 @@
 								</div>
 								<div class="mb-3">
 									<label class="form-label">DOB <span class="text-danger">*</span></label>
-									<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}" required>
+									<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}"
+										required>
 								</div>
 							</div>
 						</div>
@@ -181,19 +187,23 @@
 
 										</td>
 										<td>
-											<input type="text" id="college" name="college[0]" class="form-control" required>
+											<input type="text" id="college" name="college[0]" class="form-control"
+												required>
 
 										</td>
 										<td>
-											<input type="text" id="university" name="university[0]" class="form-control" required>
+											<input type="text" id="university" name="university[0]" class="form-control"
+												required>
 
 										</td>
 										<td>
-											<input type="date" id="start_date" name="start_date[0]" class="form-control" required>
+											<input type="date" id="start_date" name="start_date[0]" class="form-control"
+												required>
 
 										</td>
 										<td>
-											<input type="date" id="end_date" name="end_date[0]" class="form-control" required>
+											<input type="date" id="end_date" name="end_date[0]" class="form-control"
+												required>
 
 										</td>
 										<td>
@@ -203,7 +213,8 @@
 										</td>
 									</tr>
 								</table>
-								<button type="button" class="btn btn-warning" id="addField"><i class="bi bi-plus text-white fs-4"></i></button>
+								<button type="button" class="btn btn-warning" id="addField"><i
+										class="bi bi-plus text-white fs-4"></i></button>
 
 								<small id="max-error" class="text-danger"></small>
 							</div>
@@ -285,5 +296,15 @@
             }   
         })
     })
+
 </script>
+<script>
+	var loadFile = function(event) {
+	  var output = document.getElementById('output');
+	  output.src = URL.createObjectURL(event.target.files[0]);
+	  output.onload = function() {
+		URL.revokeObjectURL(output.src) // free memory
+	  }
+	};
+  </script>
 @endsection

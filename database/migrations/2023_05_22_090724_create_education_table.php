@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('level');
             $table->string('college');
             $table->string('university');
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
 
         });
