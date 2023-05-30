@@ -126,10 +126,10 @@
 
 								<div class="mb-3">
 									<label class="form-label">Old Photo</label>
-									<img src="{{ asset($student->image_path) }}" style="width:200px; height:100px; object-fit:contain" alt="">
+									<img src="{{ asset($student->image_path == "" ? "images/default.png" : $student->image_path) }}" style="width:200px; height:100px; object-fit:contain" alt="">
 									<label class="form-label">New Photo</label>
 									
-									<img class="mt-2" id="output" height="100" width="200" alt="no new image" />
+									<img class="mt-2" id="output" />
 
 								</div>
 								<div class="mb-3">
@@ -153,8 +153,15 @@
 									</span>
 								</div>
 								<div class="mb-3">
-									<label class="form-label">DOB <span class="text-danger">*</span></label>
-									<input type="date" name="dob" class="form-control" id="dob" value="{{ $student->dob }}" required>
+									<label class="form-label">DOB (AD)<span class="text-danger">*</span></label>
+									<input type="date" name="dob" class="form-control" id="dob" value="{{ $student->dob }}"
+										required>
+
+								</div>
+								<div class="mb-3">
+									<label class="form-label">DOB (BS)<span class="text-danger">*</span></label>
+									
+									<input required type="text" name="dob_bs" value="{{ $student->dob }}"  class="form-control" id="nepali-datepicker" placeholder="Select Nepali Date" />
 								</div>
 							</div>
 						</div>
@@ -313,6 +320,8 @@
 <script>
 	var loadFile = function(event) {
 	  var output = document.getElementById('output');
+	  output.height = "100"
+	  output.width = "200"
 	  output.src = URL.createObjectURL(event.target.files[0]);
 	  output.onload = function() {
 		URL.revokeObjectURL(output.src) // free memory

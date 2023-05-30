@@ -20,6 +20,11 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
     <!-- Scripts -->
+  
+    <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
+        rel="stylesheet" type="text/css" />
+    <script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
+        type="text/javascript"></script>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 
@@ -30,16 +35,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             @auth
-            <button class="btn btn-primary mx-2" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
-                    class="bi bi-list"></i>
-            </button>
+
             @endauth
 
             <div class="container">
-
+                <button class="btn btn-primary mx-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
+                        class="bi bi-list"></i>
+                </button>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Student Crud') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -99,7 +104,7 @@
 
         <main class="py-4">
             @auth
-            <div class="offcanvas offcanvas-start" style="max-width: 300px" data-bs-scroll="true" tabindex="-1"
+            <div class="offcanvas offcanvas-start" style="max-width: 250px" data-bs-scroll="true" tabindex="-1"
                 id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">{{ Auth::user()->name }}</h5>
@@ -132,7 +137,6 @@
             @yield('content')
         </main>
     </div>
-    {{-- jquery cdn --}}
 
 </body>
 

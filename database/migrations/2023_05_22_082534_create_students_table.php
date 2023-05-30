@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->string('gender');
             $table->date('dob');
+            $table->date('dob_bs');
             $table->timestamps();
         });
     }

@@ -27,6 +27,9 @@
 					dob:{
 						required:true,
 					},
+					dob_bs:{
+						required:true,
+					},
 					gender:"required",
 					"level[]":{
 						required:true
@@ -62,6 +65,9 @@
 					// 	required: "Please upload image.",
 					// },
 					dob:{
+						required: "DOB is required",
+					},
+					dob_bs:{
 						required: "DOB is required",
 					},
 					gender:{
@@ -129,7 +135,7 @@
 									<label class="form-label">Photo</label>
 									<input type="file" name="image_path" id="image" class="form-control"
 										accept="image/*" onchange="loadFile(event)" id="imgInp" />
-										<img class="mt-2" id="output" height="100" width="200" alt="image">
+									<img class="mt-2" id="output" alt="">
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Gender: <span class="text-danger">*</span></label>
@@ -144,10 +150,18 @@
 										Others<input class="mx-2" type="radio" name="gender" value="O" required>
 									</span>
 								</div>
-								<div class="mb-3">
-									<label class="form-label">DOB <span class="text-danger">*</span></label>
-									<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}"
-										required>
+								<div class="row">
+									<div class="mb-3 col">
+										<label class="form-label">DOB (AD)<span class="text-danger">*</span></label>
+										<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}"
+											required>
+	
+									</div>
+									<div class="mb-3 col">
+										<label class="form-label">DOB (BS)<span class="text-danger">*</span></label>
+										
+										<input required type="date" name="dob_bs"  class="form-control" id="nepali-datepicker" placeholder="Select Nepali Date" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -301,10 +315,20 @@
 <script>
 	var loadFile = function(event) {
 	  var output = document.getElementById('output');
-	  output.src = URL.createObjectURL(event.target.files[0]);
+	  output.height = "100"
+	  output.width = "200"
+	  output.src = URL.createObjectURL(event.target.files[0]);	
 	  output.onload = function() {
 		URL.revokeObjectURL(output.src) // free memory
 	  }
 	};
-  </script>
+
+	// date picker
+	
+	/* Select your element */
+	var mainInput = document.getElementById("nepali-datepicker");
+	
+	/* Initialize Datepicker with options */
+	mainInput.nepaliDatePicker();
+</script>
 @endsection

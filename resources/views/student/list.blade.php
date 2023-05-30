@@ -37,7 +37,7 @@
                                 <th scope="row">{{ $key }}</th>
                                 <td>
                                 <a href="/student/profile/{{ $student->id }}">
-                                        <img src="{{ asset($student->image_path) }}" alt=""
+                                    <img src="{{ asset($student->image_path == "" ? "images/default.png" : $student->image_path) }}" alt=""
                                             style="height:50px;  width:50px; border-radius:100%;object-fit:cover">
                                     </a>
                                 </td>

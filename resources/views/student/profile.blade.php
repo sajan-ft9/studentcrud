@@ -6,7 +6,7 @@
         <div class="card mb-3 col-10">
             <div class="row g-0">
                 <div class="col-md-4 p-2">
-                    <img src="{{ asset($student->image_path) }}" class="img-fluid  rounded h-100" style="object-fit: cover" alt="...">
+                    <img src="{{ asset($student->image_path == "" ? "images/default.png" : $student->image_path) }}" class="img-fluid  rounded h-100" style="object-fit: cover" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
