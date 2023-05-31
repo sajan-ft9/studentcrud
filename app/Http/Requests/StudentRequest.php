@@ -26,28 +26,30 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         $rules =  [
-            'name' => ['required','string'],
-            'address' => ['required','string'],
+            'name' => ['required', 'string'],
+            'address' => ['required', 'string'],
             'phone' => ['required', 'numeric'],
             'email' => ['required', 'email', 'unique:students,email'],
             'image_path' => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
             'gender' => ['required'],
             'dob' => ['required', 'date'],
+            'dob_bs' => ['required'],
             'level' => ['required'],
             'college' => ['required'],
             'university' => ['required'],
             'start_date' => ['required'],
             'end_date' => ['required']
         ];
-        if(in_array($this->method(), ["PUT", "PATCH"])){
+        if (in_array($this->method(), ["PUT", "PATCH"])) {
             $rules =  [
-                'name' => ['required','string'],
-                'address' => ['required','string'],
+                'name' => ['required', 'string'],
+                'address' => ['required', 'string'],
                 'phone' => ['required', 'numeric'],
-                'email' => ['required', 'email', Rule::unique('students')->ignore($this->route('student')) ],
+                'email' => ['required', 'email', Rule::unique('students')->ignore($this->route('student'))],
                 'image_path' => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
                 'gender' => ['required'],
                 'dob' => ['required', 'date'],
+                'dob_bs' => ['required'],
                 'level' => ['required'],
                 'college' => ['required'],
                 'university' => ['required'],

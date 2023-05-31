@@ -95,73 +95,96 @@
 			</div>
 			@endif
 			<div>
-				<form id="myForm" action="/student/update/{{ $student->id }}" method="POST" enctype="multipart/form-data">
+				<form id="myForm" action="/student/update/{{ $student->id }}" method="POST"
+					enctype="multipart/form-data">
 					@csrf
 					@method("PATCH")
 					<div class="tab">
 						<div class="card">
-							<div class="card-header text-center">
-								<h2>Update Student Profile</h2>
+							<div class="card-header text-center row">
+								<div class="col-2">
+									<a href="{{ url()->previous() }}" class="btn btn-success"><i
+											class="bi bi-arrow-left"></i></a>
+								</div>
+								<div class="col-8">
+									<h2>Update Student Profile</h2>
+								</div>
 							</div>
 							<!-- One "tab" for each step in the form: -->
 							<div class="card-body">
 								<div class="mb-3">
 									<label class="form-label">Name <span class="text-danger">*</span></label>
-									<input type="text" name="name" id="name" class="form-control" value="{{ $student->name }}" required>
+									<input type="text" name="name" id="name" class="form-control"
+										value="{{ $student->name }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Address <span class="text-danger">*</span></label>
-									<input type="text" name="address" id="address" class="form-control" value="{{ $student->address }}"
-										required>
+									<input type="text" name="address" id="address" class="form-control"
+										value="{{ $student->address }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Phone <span class="text-danger">*</span></label>
-									<input type="tel" name="phone" id="phone" class="form-control" value="{{ $student->phone }}" required>
+									<input type="tel" name="phone" id="phone" class="form-control"
+										value="{{ $student->phone }}" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Email address <span class="text-danger">*</span></label>
-									<input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}"
-										required>
+									<input type="email" id="email" name="email" class="form-control"
+										value="{{ $student->email }}" required>
 								</div>
 
 								<div class="mb-3">
 									<label class="form-label">Old Photo</label>
-									<img src="{{ asset($student->image_path == "" ? "images/default.png" : $student->image_path) }}" style="width:200px; height:100px; object-fit:contain" alt="">
-									<label class="form-label">New Photo</label>
-									
+									<img src="{{ asset($student->image_path == "" ? "/images/default.png" :
+										$student->image_path) }}" style="width:200px; height:100px; object-fit:contain"
+									alt="">
+									<label class="form-label" id="new_photo_label"></label>
+
 									<img class="mt-2" id="output" />
 
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Photo</label>
-									<input type="file" name="image_path" id="image" class="form-control" accept="image/*" onchange="loadFile(event)" />
+									<input type="file" name="image_path" id="image" class="form-control"
+										accept="image/*" onchange="loadFile(event)" />
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Gender: <span class="text-danger">*</span></label>
 									<span class="mx-4">
-										Male<input class="mx-2" type="radio" name="gender" value="M" {{ $student->gender === "M" ? "checked"
+										Male<input class="mx-2" type="radio" name="gender" value="M" {{ $student->gender
+										=== "M" ? "checked"
 										: "" }}>
 
 									</span>
 									<span class="mx-4">
-										Female<input class="mx-2" type="radio" name="gender" value="F" {{ $student->gender === "F" ?
+										Female<input class="mx-2" type="radio" name="gender" value="F" {{
+											$student->gender === "F" ?
 										"checked" : "" }}>
 									</span>
 									<span class="mx-4">
-										Others<input class="mx-2" type="radio" name="gender" value="O" {{ $student->gender === "O" ?
+										Others<input class="mx-2" type="radio" name="gender" value="O" {{
+											$student->gender === "O" ?
 										"checked" : "" }}>
 									</span>
 								</div>
 								<div class="mb-3">
-									<label class="form-label">DOB (AD)<span class="text-danger">*</span></label>
-									<input type="date" name="dob" class="form-control" id="dob" value="{{ $student->dob }}"
-										required>
+
 
 								</div>
-								<div class="mb-3">
-									<label class="form-label">DOB (BS)<span class="text-danger">*</span></label>
-									
-									<input required type="text" name="dob_bs" value="{{ $student->dob }}"  class="form-control" id="nepali-datepicker" placeholder="Select Nepali Date" />
+								<div class="row">
+									<div class="col mb-3">
+										<label class="form-label">DOB (AD)<span class="text-danger">*</span></label>
+										<input type="date" name="dob" class="form-control" id="dob"
+											onclick="this.showPicker()" value="{{ $student->dob }}" required>
+									</div>
+									<div class="col mb-3">
+										<label class="form-label">DOB (BS)<span class="text-danger">*</span></label>
+
+										<input required type="text" readonly name="dob_bs"
+											class="form-control" id="nepali-datepicker" value="{{ $student->dob_bs }}"
+											placeholder="Select Nepali Date" />
+									</div>
+
 								</div>
 							</div>
 						</div>
@@ -198,28 +221,28 @@
 									@foreach ($student->education as $key=>$item)
 									<tr>
 										<td>
-											<input type="text" id="level" name="level[{{ $key }}]" class="form-control" value="{{ $item->level }}"
-												required>
+											<input type="text" id="level" name="level[{{ $key }}]" class="form-control"
+												value="{{ $item->level }}" required>
 
 										</td>
 										<td>
-											<input type="text" id="college" name="college[{{ $key }}]" class="form-control"
-												value="{{ $item->college }}" required>
+											<input type="text" id="college" name="college[{{ $key }}]"
+												class="form-control" value="{{ $item->college }}" required>
 
 										</td>
 										<td>
-											<input type="text" id="university" name="university[{{ $key }}]" class="form-control"
-												value="{{ $item->university }}" required>
+											<input type="text" id="university" name="university[{{ $key }}]"
+												class="form-control" value="{{ $item->university }}" required>
 
 										</td>
 										<td>
-											<input type="date" id="start_date" name="start_date[{{ $key }}]" class="form-control"
-												value="{{ $item->start_date }}" required>
+											<input type="date" id="start_date" name="start_date[{{ $key }}]"
+												class="form-control" value="{{ $item->start_date }}" required>
 
 										</td>
 										<td>
-											<input type="date" id="end_date" name="end_date[{{ $key }}]" class="form-control"
-												value="{{ $item->end_date }}" required>
+											<input type="date" id="end_date" name="end_date[{{ $key }}]"
+												class="form-control" value="{{ $item->end_date }}" required>
 
 										</td>
 										<td>
@@ -230,7 +253,8 @@
 									</tr>
 									@endforeach
 								</table>
-								<button type="button" class="btn btn-warning" id="addField"><i class="bi bi-plus text-white fs-4"></i></button>
+								<button type="button" class="btn btn-warning" id="addField"><i
+										class="bi bi-plus text-white fs-4"></i></button>
 
 								<small id="max-error" class="text-danger"></small>
 							</div>
@@ -320,6 +344,8 @@
 <script>
 	var loadFile = function(event) {
 	  var output = document.getElementById('output');
+	  var label = document.getElementById('new_photo_label');
+	  label.innerText ="New Photo"
 	  output.height = "100"
 	  output.width = "200"
 	  output.src = URL.createObjectURL(event.target.files[0]);
@@ -327,5 +353,13 @@
 		URL.revokeObjectURL(output.src) // free memory
 	  }
 	};
-  </script>
+
+		// date picker
+	
+	/* Select your element */
+	var mainInput = document.getElementById("nepali-datepicker");
+	
+	/* Initialize Datepicker with options */
+	mainInput.nepaliDatePicker();
+</script>
 @endsection

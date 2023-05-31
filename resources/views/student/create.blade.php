@@ -88,6 +88,7 @@
 			).navigateTo(0);
 		});
 </script>
+
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-12">
@@ -153,14 +154,15 @@
 								<div class="row">
 									<div class="mb-3 col">
 										<label class="form-label">DOB (AD)<span class="text-danger">*</span></label>
-										<input type="date" name="dob" class="form-control" id="dob" value="{{ old('dob') }}"
-											required>
-	
+										<input type="date" name="dob" class="form-control" id="dob"
+											value="{{ old('dob') }}" required>
+
 									</div>
 									<div class="mb-3 col">
 										<label class="form-label">DOB (BS)<span class="text-danger">*</span></label>
-										
-										<input required type="date" name="dob_bs"  class="form-control" id="nepali-datepicker" placeholder="Select Nepali Date" />
+
+										<input required type="text" readonly name="dob_bs" class="form-control"
+											id="nepali-datepicker" placeholder="Select Nepali Date" />
 									</div>
 								</div>
 							</div>

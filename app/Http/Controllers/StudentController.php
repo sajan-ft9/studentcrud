@@ -25,9 +25,35 @@ class StudentController extends Controller
         return view("student.edit", compact('student'));
     }
 
+    public function store(StudentRequest $request)
+    {
+        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob', 'dob_bs']);
+
+        if(isset($request->image_path)){
+            $imageName = time() . '.' . $request->image_path->extension();
+            $request->image_path->storeAs('students', $imageName, 'public');
+            $student_fields['image_path'] = '/storage/students/' . $imageName;    
+        };
+        
+        $student = Student::create($student_fields);
+
+        foreach ($request->level as $key => $item) {
+            $education = new Education();
+            $education->student_id = $student->id;
+            $education->level = $request->level[$key];
+            $education->college = $request->college[$key];
+            $education->university = $request->university[$key];
+            $education->start_date = $request->start_date[$key];
+            $education->end_date = $request->end_date[$key];
+            $education->save();
+        }
+
+        return redirect(route('student.list'))->with('success', "Student info added successfully");
+    }
+
     public function update(StudentRequest $request, Student $student)
     {
-        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob']);
+        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob', 'dob_bs']);
 
         if ($request->image_path) {
 
@@ -72,31 +98,6 @@ class StudentController extends Controller
     }
 
 
-    public function store(StudentRequest $request)
-    {
-        $student_fields = $request->only(['name', 'address', 'phone', 'email', 'image_path', 'gender', 'dob']);
-
-        if(isset($request->image_path)){
-            $imageName = time() . '.' . $request->image_path->extension();
-            $request->image_path->storeAs('students', $imageName, 'public');
-            $student_fields['image_path'] = '/storage/students/' . $imageName;    
-        };
-        
-        $student = Student::create($student_fields);
-
-        foreach ($request->level as $key => $item) {
-            $education = new Education();
-            $education->student_id = $student->id;
-            $education->level = $request->level[$key];
-            $education->college = $request->college[$key];
-            $education->university = $request->university[$key];
-            $education->start_date = $request->start_date[$key];
-            $education->end_date = $request->end_date[$key];
-            $education->save();
-        }
-
-        return redirect(route('student.list'))->with('success', "Student info added successfully");
-    }
 
     public function destroy(Student $student)
     {
